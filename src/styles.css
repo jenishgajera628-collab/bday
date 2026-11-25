@@ -338,6 +338,89 @@
 .section-heading .eyebrow { justify-content: center; }
 .section-heading h2 { margin: 17px 0 12px; color: var(--cream); font-family: var(--font-display); font-size: clamp(39px, 5vw, 62px); font-weight: 400; line-height: 1.03; }
 .section-heading p { max-width: 520px; margin: 0 auto; color: var(--ink-soft); font-family: var(--font-display); font-size: 19px; font-style: italic; line-height: 1.45; }
+
+.beginning-section { background: radial-gradient(ellipse at 18% 22%, color-mix(in oklab, var(--wine) 26%, transparent), transparent 48%), radial-gradient(ellipse at 85% 74%, color-mix(in oklab, var(--rose) 12%, transparent), transparent 46%), linear-gradient(180deg, var(--night), color-mix(in oklab, var(--wine) 18%, var(--night)) 50%, var(--night)); }
+.beginning-header { position: relative; max-width: 720px; margin: 70px auto 54px; padding: 0 24px; text-align: center; }
+.beginning-header .eyebrow { justify-content: center; }
+.beginning-title { margin: 16px 0 14px; color: var(--cream); font-family: var(--font-display); font-size: clamp(40px, 5.4vw, 66px); font-weight: 400; line-height: 1.02; }
+.beginning-title em { color: var(--rose); font-style: italic; }
+.beginning-subtitle { max-width: 510px; margin: 0 auto; color: var(--ink-soft); font-family: var(--font-display); font-size: 19px; font-style: italic; line-height: 1.45; }
+.beginning-sticker-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 12px 16px; margin-top: 24px; }
+.love-sticker { display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; border-radius: 99px; font-size: 11px; letter-spacing: .09em; box-shadow: 0 8px 22px color-mix(in oklab, var(--night) 55%, transparent); }
+.love-sticker--stamp { border: 1.5px dashed var(--champagne); color: var(--champagne); background: color-mix(in oklab, var(--wine) 35%, var(--night)); text-transform: uppercase; transform: rotate(-2.5deg); }
+.love-sticker--pill { border: 1px solid color-mix(in oklab, var(--rose) 48%, transparent); color: var(--blush); background: color-mix(in oklab, var(--rose) 18%, var(--night)); transform: rotate(1.5deg); }
+.love-sticker--pill svg { color: var(--rose); }
+.love-sticker--hand { border: 1px solid color-mix(in oklab, var(--cream) 22%, transparent); border-radius: 4px; color: var(--wine); background: var(--cream); font-family: var(--font-hand); font-size: 18px; letter-spacing: 0; padding: 3px 13px; transform: rotate(-2deg); }
+
+.beginning-stage { position: relative; max-width: 1120px; margin: 0 auto; }
+.beginning-cartoon { position: absolute; z-index: 4; pointer-events: none; filter: drop-shadow(0 12px 24px color-mix(in oklab, var(--night) 70%, transparent)); }
+.beginning-cartoon--bears { top: -22px; left: -115px; width: 150px; transform: rotate(-9deg); animation: gentle-bob 3.6s ease-in-out infinite; }
+.beginning-cartoon--letter { top: -12px; right: -105px; width: 135px; transform: rotate(10deg); animation: gentle-bob 4.2s ease-in-out infinite .6s; }
+.beginning-cartoon--heart { top: -32px; left: 25%; width: 100px; transform: rotate(-12deg); animation: gentle-bob 3.8s ease-in-out infinite .3s; }
+.beginning-cartoon--cupid { right: 24%; bottom: -42px; width: 132px; transform: rotate(8deg); animation: gentle-bob 4s ease-in-out infinite 1s; }
+
+.beginning-grid--showcase { position: relative; z-index: 2; display: grid; grid-template-columns: minmax(0, 232px) minmax(0, 344px) minmax(0, 232px); grid-template-rows: auto auto; align-items: center; justify-content: center; gap: 30px 42px; max-width: 940px; margin: 0 auto; }
+.beginning-card { position: relative; display: flex; width: 100%; height: auto; min-height: 0; flex-direction: column; align-items: stretch; justify-content: flex-start; gap: 0; padding: 11px 11px 0; border: 1px solid color-mix(in oklab, var(--rose) 28%, transparent); border-radius: 8px; color: var(--cream); background: linear-gradient(165deg, color-mix(in oklab, var(--wine) 38%, var(--night)), color-mix(in oklab, var(--night) 95%, transparent)); box-shadow: 0 20px 44px color-mix(in oklab, var(--night) 72%, transparent), inset 0 1px 0 color-mix(in oklab, var(--champagne) 16%, transparent); white-space: normal; transition: transform .35s ease, box-shadow .35s ease, border-color .35s ease; }
+.beginning-card:hover { z-index: 7; transform: translateY(-9px) rotate(0deg) scale(1.04); color: var(--cream); border-color: color-mix(in oklab, var(--rose) 58%, transparent); background: linear-gradient(165deg, color-mix(in oklab, var(--wine) 48%, var(--night)), color-mix(in oklab, var(--night) 94%, transparent)); box-shadow: 0 26px 54px color-mix(in oklab, var(--night) 82%, transparent), 0 0 28px var(--rose-glow); }
+.beginning-card--1 { grid-column: 1; grid-row: 1; transform: rotate(-3deg); }
+.beginning-card--2 { grid-column: 3; grid-row: 1; transform: rotate(2.8deg); }
+.beginning-card--3 { grid-column: 1; grid-row: 2; transform: rotate(2.4deg); }
+.beginning-card--4 { grid-column: 3; grid-row: 2; transform: rotate(-2.6deg); }
+.beginning-card__frame { position: relative; width: 100%; overflow: hidden; border: 1px solid color-mix(in oklab, var(--rose) 20%, transparent); border-radius: 5px; background: var(--night); }
+.beginning-card__frame .memory-art { aspect-ratio: 4 / 5; }
+.beginning-card__caption { display: block; padding: 12px 4px 2px; overflow: hidden; color: var(--cream); font-family: var(--font-hand); font-size: 23px; line-height: 1.1; text-align: left; text-overflow: ellipsis; white-space: nowrap; }
+.beginning-card__note { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 2px 4px 13px; color: var(--blush); font-family: var(--font-display); font-size: 13px; font-style: italic; text-align: left; }
+.beginning-card__note svg { flex: 0 0 auto; color: var(--rose); }
+.beginning-card__sticker { position: absolute; top: 8px; right: -10px; z-index: 4; padding: 3px 10px; border: 1.5px solid color-mix(in oklab, var(--cream) 80%, transparent); border-radius: 99px; color: var(--night); background: linear-gradient(135deg, var(--rose), var(--blush)); box-shadow: 0 6px 16px color-mix(in oklab, var(--night) 65%, transparent); font-family: var(--font-hand); font-size: 15px; font-weight: 600; line-height: 1.1; transform: rotate(10deg); }
+.washi-tape { position: absolute; top: -11px; left: 50%; z-index: 4; width: 78px; height: 20px; transform: translateX(-50%) rotate(-3deg); opacity: .88; border-radius: 1px; box-shadow: 0 2px 6px color-mix(in oklab, var(--night) 35%, transparent); }
+.washi-tape--rose { background: repeating-linear-gradient(45deg, color-mix(in oklab, var(--rose) 80%, transparent) 0 6px, color-mix(in oklab, var(--blush) 78%, transparent) 6px 12px); }
+.washi-tape--champagne { background: repeating-linear-gradient(-45deg, color-mix(in oklab, var(--champagne) 82%, transparent) 0 6px, color-mix(in oklab, var(--cream) 74%, transparent) 6px 12px); transform: translateX(-50%) rotate(3deg); }
+.washi-tape--blush { background: repeating-linear-gradient(90deg, color-mix(in oklab, var(--blush) 85%, transparent) 0 7px, color-mix(in oklab, var(--rose) 65%, transparent) 7px 14px); }
+
+.master-photo-wrap { position: relative; z-index: 6; grid-column: 2; grid-row: 1 / span 2; align-self: center; justify-self: center; width: 100%; max-width: 344px; padding: 10px 0; opacity: 1; }
+.master-halo { position: absolute; inset: -16px -18px; z-index: 0; border-radius: 28px; background: radial-gradient(circle at 50% 45%, color-mix(in oklab, var(--rose) 42%, transparent), color-mix(in oklab, var(--champagne) 22%, transparent) 48%, transparent 74%); filter: blur(18px); opacity: .78; pointer-events: none; transition: opacity .35s ease, transform .4s ease; }
+.master-photo-wrap--active .master-halo { opacity: 1; transform: scale(1.1); }
+.master-emoji-ring { position: absolute; inset: 0; z-index: 8; pointer-events: none; }
+.master-emoji { position: absolute; font-size: 24px; line-height: 1; filter: drop-shadow(0 4px 10px color-mix(in oklab, var(--night) 75%, transparent)); transition: transform .42s cubic-bezier(.22, 1.25, .36, 1); animation: gentle-bob 3.2s ease-in-out infinite; }
+.master-emoji--one { top: -10px; left: -12px; font-size: 28px; }
+.master-emoji--two { top: -12px; right: -10px; font-size: 28px; animation-delay: .4s; }
+.master-emoji--three { top: 42%; left: -24px; font-size: 25px; animation-delay: .9s; }
+.master-emoji--four { top: 44%; right: -24px; font-size: 25px; animation-delay: 1.3s; }
+.master-emoji--five { bottom: 6px; left: -14px; font-size: 26px; animation-delay: .6s; }
+.master-emoji--six { right: -12px; bottom: 8px; font-size: 27px; animation-delay: 1.1s; }
+.master-photo-wrap--active .master-emoji--one { transform: translate(-10px, -12px) rotate(-18deg) scale(1.28); }
+.master-photo-wrap--active .master-emoji--two { transform: translate(12px, -14px) rotate(18deg) scale(1.28); }
+.master-photo-wrap--active .master-emoji--three { transform: translate(-14px, -4px) rotate(-14deg) scale(1.25); }
+.master-photo-wrap--active .master-emoji--four { transform: translate(14px, 4px) rotate(16deg) scale(1.25); }
+.master-photo-wrap--active .master-emoji--five { transform: translate(-10px, 12px) rotate(-15deg) scale(1.26); }
+.master-photo-wrap--active .master-emoji--six { transform: translate(12px, 10px) rotate(16deg) scale(1.3); }
+
+.master-card { --mx: 0; --my: 0; --spot-x: 50%; --spot-y: 45%; position: relative; z-index: 2; display: flex; width: 100%; height: auto; min-height: 0; flex-direction: column; align-items: stretch; justify-content: flex-start; gap: 0; padding: 14px 14px 4px; border: 2px solid color-mix(in oklab, var(--champagne) 58%, transparent); border-radius: 12px; color: var(--cream); background: linear-gradient(165deg, color-mix(in oklab, var(--wine) 48%, var(--night)), color-mix(in oklab, var(--night) 96%, transparent)); box-shadow: 0 28px 65px color-mix(in oklab, var(--night) 84%, transparent), 0 0 38px color-mix(in oklab, var(--rose) 28%, transparent), inset 0 1px 0 color-mix(in oklab, var(--champagne) 24%, transparent); cursor: pointer; white-space: normal; transform: perspective(1000px) rotateX(calc(var(--my) * -9deg)) rotateY(calc(var(--mx) * 10deg)) translate3d(calc(var(--mx) * 7px), calc(var(--my) * 7px), 0); transition: transform .22s cubic-bezier(.22, 1, .36, 1), box-shadow .35s ease, border-color .35s ease; }
+.master-card:hover { color: var(--cream); background: linear-gradient(165deg, color-mix(in oklab, var(--wine) 56%, var(--night)), color-mix(in oklab, var(--night) 95%, transparent)); border-color: var(--rose); box-shadow: 0 36px 80px color-mix(in oklab, var(--night) 90%, transparent), 0 0 54px color-mix(in oklab, var(--rose) 48%, transparent), 0 0 24px color-mix(in oklab, var(--champagne) 36%, transparent); transform: perspective(1000px) rotateX(calc(var(--my) * -10deg)) rotateY(calc(var(--mx) * 12deg)) translate3d(calc(var(--mx) * 10px), calc(var(--my) * 10px - 6px), 0) scale(1.045); }
+.master-card:focus-visible { outline: 2px solid var(--rose); outline-offset: 4px; }
+.master-card__spotlight { position: absolute; inset: 0; z-index: 5; border-radius: 10px; pointer-events: none; opacity: 0; background: radial-gradient(circle 160px at var(--spot-x) var(--spot-y), color-mix(in oklab, var(--cream) 22%, transparent), color-mix(in oklab, var(--rose) 14%, transparent) 45%, transparent 72%); transition: opacity .28s ease; }
+.master-card:hover .master-card__spotlight { opacity: 1; }
+.master-card__crown { position: absolute; top: -15px; left: 50%; z-index: 6; display: inline-flex; align-items: center; gap: 5px; padding: 5px 15px; border: 1.5px solid var(--cream); border-radius: 99px; color: var(--night); background: linear-gradient(135deg, var(--champagne), var(--rose)); box-shadow: 0 8px 20px color-mix(in oklab, var(--night) 55%, transparent); font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; white-space: nowrap; transform: translateX(-50%) rotate(-1.5deg); transition: transform .3s ease; }
+.master-card:hover .master-card__crown { transform: translateX(-50%) translateY(-3px) rotate(1deg) scale(1.06); }
+.master-card__frame { position: relative; display: block; width: 100%; aspect-ratio: 3 / 4; overflow: hidden; border: 1px solid color-mix(in oklab, var(--champagne) 24%, transparent); border-radius: 8px; background: var(--night); }
+.master-card__frame .memory-art { width: 100%; height: 100%; aspect-ratio: 3 / 4; }
+.master-card__frame .memory-art__photo { z-index: 2; transition: transform .35s ease; }
+.master-card:hover .master-card__frame .memory-art__photo { transform: scale(1.05) translate(calc(var(--mx) * -6px), calc(var(--my) * -6px)); }
+.master-card__corner-emoji { position: absolute; right: 10px; bottom: 8px; z-index: 4; font-size: 24px; filter: drop-shadow(0 3px 8px color-mix(in oklab, var(--night) 70%, transparent)); transition: transform .35s ease; }
+.master-card:hover .master-card__corner-emoji { transform: scale(1.28) rotate(14deg); }
+.master-card__caption { display: block; padding: 14px 4px 2px; color: var(--cream); font-family: var(--font-hand); font-size: 28px; line-height: 1.1; text-align: center; }
+.master-card__note { display: block; padding: 2px 4px 12px; color: var(--champagne); font-family: var(--font-display); font-size: 14px; font-style: italic; text-align: center; }
+.beginning-section--midnight { background: radial-gradient(ellipse at 82% 20%, color-mix(in oklab, var(--wine) 28%, transparent), transparent 48%), radial-gradient(ellipse at 16% 78%, color-mix(in oklab, var(--champagne) 11%, transparent), transparent 45%), linear-gradient(180deg, var(--night), color-mix(in oklab, var(--wine) 15%, var(--night)) 50%, var(--night)); }
+.beginning-card--midnight { border-color: color-mix(in oklab, var(--champagne) 28%, transparent); }
+.master-halo--midnight { background: radial-gradient(circle at 50% 45%, color-mix(in oklab, var(--champagne) 34%, transparent), color-mix(in oklab, var(--rose) 28%, transparent) 48%, transparent 74%); }
+.master-card--midnight { border-color: color-mix(in oklab, var(--rose) 52%, var(--champagne)); }
+.master-card__crown--midnight { background: linear-gradient(135deg, var(--rose), var(--blush)); }
+.master-card__twinkle { position: absolute; z-index: 7; pointer-events: none; color: var(--champagne); font-size: 20px; text-shadow: 0 0 12px var(--champagne); transition: transform .3s ease, opacity .3s ease; animation: twinkle 2.8s ease-in-out infinite; }
+.master-card__twinkle--one { top: 20px; left: -12px; }
+.master-card__twinkle--two { right: -10px; bottom: 72px; color: var(--rose); animation-delay: 1.1s; }
+.master-card--midnight:hover .master-card__twinkle--one { transform: translate(calc(var(--mx) * -10px), calc(var(--my) * -10px)) rotate(25deg) scale(1.35); }
+.master-card--midnight:hover .master-card__twinkle--two { transform: translate(calc(var(--mx) * 10px), calc(var(--my) * 10px)) rotate(-25deg) scale(1.35); }
+
 .memory-section { background: linear-gradient(180deg, var(--night), color-mix(in oklab, var(--wine) 13%, var(--night)) 46%, var(--night)); }
 .memory-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 30px 27px; align-items: start; }
 .polaroid-card { display: flex; width: 100%; height: auto; min-height: 0; flex-direction: column; align-items: stretch; justify-content: flex-start; gap: 0; padding: 11px 11px 0; border: 1px solid color-mix(in oklab, var(--cream) 28%, transparent); border-radius: 2px; color: var(--wine); background: var(--cream); box-shadow: 0 12px 30px color-mix(in oklab, var(--night) 42%, transparent); white-space: normal; transition: transform .35s ease, box-shadow .35s ease; }
@@ -558,6 +641,15 @@
   .hero-note--top { left: 0; }
   .hero-note--bottom { right: -2px; }
   .page-section { padding-right: 40px; padding-left: 40px; }
+  .beginning-cartoon--bears { top: -28px; left: -10px; width: 112px; }
+  .beginning-cartoon--letter { top: -22px; right: -8px; width: 102px; }
+  .beginning-cartoon--heart, .beginning-cartoon--cupid { display: none; }
+  .beginning-grid--showcase { grid-template-columns: repeat(2, minmax(0, 240px)); grid-template-rows: auto; gap: 26px 20px; }
+  .beginning-card--1 { grid-column: 1; grid-row: 1; }
+  .beginning-card--2 { grid-column: 2; grid-row: 1; }
+  .master-photo-wrap { grid-column: 1 / span 2; grid-row: 2; max-width: 300px; margin: 6px 0; }
+  .beginning-card--3 { grid-column: 1; grid-row: 3; }
+  .beginning-card--4 { grid-column: 2; grid-row: 3; }
   .memory-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
   .memory-grid .polaroid-card:nth-child(4) { margin-top: 0; }
   .memory-grid .polaroid-card:nth-child(5) { margin-top: 11px; }
@@ -599,6 +691,27 @@
   .section-heading { margin: 57px auto 38px; }
   .section-heading h2 { font-size: clamp(37px, 10vw, 49px); }
   .section-heading p { font-size: 17px; }
+  .beginning-header { margin: 52px auto 38px; padding: 0 4px; }
+  .beginning-title { font-size: clamp(36px, 10vw, 48px); }
+  .beginning-subtitle { font-size: 17px; }
+  .beginning-cartoon--bears { top: -48px; left: -6px; width: 88px; }
+  .beginning-cartoon--letter { top: -42px; right: -4px; width: 82px; }
+  .beginning-cartoon--heart, .beginning-cartoon--cupid { display: none; }
+  .beginning-grid--showcase { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px 14px; }
+  .beginning-card { width: 100%; max-width: 220px; padding: 8px 8px 0; justify-self: center; }
+  .beginning-card--1 { grid-column: 1; grid-row: 1; transform: rotate(-1.5deg); }
+  .beginning-card--2 { grid-column: 2; grid-row: 1; transform: rotate(1.5deg); }
+  .master-photo-wrap { grid-column: 1 / span 2; grid-row: 2; max-width: 268px; margin: 10px 0; }
+  .master-card { padding: 11px 11px 4px; }
+  .master-card__caption { font-size: 24px; }
+  .master-card__note { font-size: 12px; }
+  .master-emoji { font-size: 21px; }
+  .beginning-card--3 { grid-column: 1; grid-row: 3; transform: rotate(-1.2deg); }
+  .beginning-card--4 { grid-column: 2; grid-row: 3; transform: rotate(1.4deg); }
+  .beginning-card__caption { padding-top: 10px; font-size: 19px; }
+  .beginning-card__note { padding-bottom: 10px; font-size: 11px; }
+  .beginning-card__sticker { top: 4px; right: -4px; padding: 2px 7px; font-size: 13px; }
+  .washi-tape { top: -8px; width: 58px; height: 16px; }
   .memory-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px 13px; }
   .polaroid-card { padding: 7px 7px 0; }
   .polaroid-card .memory-art { aspect-ratio: 1 / 1; }

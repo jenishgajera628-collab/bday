@@ -57,6 +57,115 @@ export const heroMemory: PhotoMemory = {
   image: "/assets/aistudio/image_242ec018.png",
 };
 
+export type BeginningMemory = PhotoMemory & {
+  sticker: string;
+  tapeVariant: "rose" | "champagne" | "blush";
+};
+
+export const masterBeginningMemory: PhotoMemory = {
+  id: 0,
+  title: "My Whole Heart 🫶✨",
+  caption: "No refunds, stuck with me forever 🤭💘",
+  note: "Hands intertwined, hearts completely full — this one is my favorite masterpiece of us. 🥰💞",
+  artClass: "memory-art--five",
+  image: "/assets/beginning/master-moment.jpg",
+};
+
+export const beginningMemories: BeginningMemory[] = [
+  {
+    id: 1,
+    title: "Mirror Magic",
+    caption: "Right beside you 😘",
+    note: "Even behind the phone, my favorite view is always you.",
+    artClass: "memory-art--one",
+    image: "/assets/beginning/moment-1.jpg",
+    sticker: "xoxo 😘",
+    tapeVariant: "rose",
+  },
+  {
+    id: 2,
+    title: "Softest Smile",
+    caption: "Head on my shoulder 🥹",
+    note: "That sweet smile of yours makes the whole world slow down.",
+    artClass: "memory-art--two",
+    image: "/assets/beginning/moment-2.jpg",
+    sticker: "cutie 🥹",
+    tapeVariant: "champagne",
+  },
+  {
+    id: 3,
+    title: "Simply Us",
+    caption: "Hand on my heart 🥰",
+    note: "Quiet little moments like this feel like my whole universe.",
+    artClass: "memory-art--three",
+    image: "/assets/beginning/moment-3.jpg",
+    sticker: "my fav 🥰",
+    tapeVariant: "blush",
+  },
+  {
+    id: 4,
+    title: "Closer Still",
+    caption: "Just a whisper away 🙈",
+    note: "Every second wrapped in your warmth feels just like home.",
+    artClass: "memory-art--four",
+    image: "/assets/beginning/moment-4.jpg",
+    sticker: "love u 🤭",
+    tapeVariant: "champagne",
+  },
+];
+
+export const chapterTwoMasterMemory: PhotoMemory = {
+  id: 0,
+  title: "Always My Safe Place 🫂🖤",
+  caption: "Black fits, warm hugs & endless chaos 🥰🔥",
+  note: "Every late-night mirror moment with you turns into my favorite memory of all time. 🌙🫰",
+  artClass: "memory-art--six",
+  image: "/assets/chapter-two/master-moment.jpg",
+};
+
+export const chapterTwoMemories: BeginningMemory[] = [
+  {
+    id: 1,
+    title: "Caught in Black",
+    caption: "holding you close 🫂",
+    note: "Right behind me, hand around my waist, and my heart completely yours.",
+    artClass: "memory-art--one",
+    image: "/assets/chapter-two/moment-1.jpg",
+    sticker: "mine 🔒",
+    tapeVariant: "champagne",
+  },
+  {
+    id: 2,
+    title: "Flower & Hugs",
+    caption: "that cute blue clip 🌺",
+    note: "Wrapped in your arms, smelling like magic and feeling like home.",
+    artClass: "memory-art--two",
+    image: "/assets/chapter-two/moment-2.jpg",
+    sticker: "adorable 🥺",
+    tapeVariant: "rose",
+  },
+  {
+    id: 3,
+    title: "Flash & Finger Heart",
+    caption: "little heart for you 🫰",
+    note: "Even with the camera flash blinding us, your tiny heart stole the frame.",
+    artClass: "memory-art--three",
+    image: "/assets/chapter-two/moment-3.jpg",
+    sticker: "my heart 💓",
+    tapeVariant: "blush",
+  },
+  {
+    id: 4,
+    title: "Look at That Smile",
+    caption: "eyes full of love 🤩",
+    note: "The way you look up smiling like that melts me every single time.",
+    artClass: "memory-art--four",
+    image: "/assets/chapter-two/moment-4.jpg",
+    sticker: "obsessed 😍",
+    tapeVariant: "rose",
+  },
+];
+
 export const galleryMemories: PhotoMemory[] = [
   {
     id: 1,
