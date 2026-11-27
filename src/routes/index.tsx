@@ -4,12 +4,12 @@ import { OurLittleUniverse } from "@/components/birthday/OurLittleUniverse";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Our Little Universe — A Birthday Surprise for Yuku" },
+      { title: "For My Yuku — A Birthday Surprise" },
       {
         name: "description",
         content: "A little world of memories, love, and birthday wishes made just for Yuku.",
       },
-      { property: "og:title", content: "Our Little Universe — A Birthday Surprise for Yuku" },
+      { property: "og:title", content: "For My Yuku — A Birthday Surprise" },
       {
         property: "og:description",
         content: "A little world of memories, love, and birthday wishes made just for Yuku.",

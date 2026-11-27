@@ -23,72 +23,24 @@ import {
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
-import {
-  CupidArrowSticker,
-  HuggingBearsCartoon,
-  KawaiiHeartCartoon,
-  LovePotionBottleCartoon,
-  MoonlightKittiesCartoon,
-  PolaroidCameraCartoon,
-  ShootingStarHeartCartoon,
-  WingedLetterCartoon,
-} from "@/components/birthday/LoveStickers";
+import { HeartCollage } from "@/components/birthday/HeartCollage";
 import { Button } from "@/components/ui/button";
 import {
-  beginningMemories,
   birthdayLetter,
   birthdaySong,
-  chapterTwoMasterMemory,
-  chapterTwoMemories,
   ENABLE_COUNTDOWN_LOCK,
   galleryMemories,
   getBirthdayUnlockTimestamp,
   getCountdownParts,
   heroMemory,
-  masterBeginningMemory,
   specialReasons,
   storyTimeline,
   thingsToAdore,
   type PhotoMemory,
 } from "@/lib/birthday-content";
 
-const beginningLightboxMemories: PhotoMemory[] = [
-  beginningMemories[0]!,
-  beginningMemories[1]!,
-  masterBeginningMemory,
-  beginningMemories[2]!,
-  beginningMemories[3]!,
-];
-
-const midnightLightboxMemories: PhotoMemory[] = [
-  chapterTwoMemories[0]!,
-  chapterTwoMemories[1]!,
-  chapterTwoMasterMemory,
-  chapterTwoMemories[2]!,
-  chapterTwoMemories[3]!,
-];
-
-const masterFloatingEmojis = [
-  { emoji: "🥰", slot: "one" },
-  { emoji: "🫶", slot: "two" },
-  { emoji: "🤭", slot: "three" },
-  { emoji: "🙈", slot: "four" },
-  { emoji: "😘", slot: "five" },
-  { emoji: "💘", slot: "six" },
-];
-
-const midnightFloatingEmojis = [
-  { emoji: "🫰", slot: "one" },
-  { emoji: "🫂", slot: "two" },
-  { emoji: "🌺", slot: "three" },
-  { emoji: "🦋", slot: "four" },
-  { emoji: "💓", slot: "five" },
-  { emoji: "🤩", slot: "six" },
-];
-
 const navItems = [
-  { label: "Beginning", href: "#beginning" },
-  { label: "Midnight", href: "#midnight" },
+  { label: "Her heart", href: "#heart-collage" },
   { label: "Memories", href: "#memories" },
   { label: "Our story", href: "#story" },
   { label: "Little things", href: "#adore" },
@@ -199,7 +151,7 @@ export function OurLittleUniverse() {
           <div className="countdown-content">
             <span className="opening-kicker"><Sparkles size={14} /> a little surprise is waiting</span>
             <h1 className="countdown-title">Counting Down to<br /><em>Your Special Day</em></h1>
-            <p className="countdown-subtitle">This little universe opens at 12:00 AM on January 6, 2027.</p>
+            <p className="countdown-subtitle">This birthday surprise opens at 12:00 AM on January 6, 2027.</p>
             <div className="countdown-grid" aria-live="polite">
               {["Days", "Hours", "Minutes", "Seconds"].map((label) => (
                 <div className="countdown-unit" key={label}>
@@ -239,7 +191,7 @@ export function OurLittleUniverse() {
           <div className="countdown-content">
             <span className="opening-kicker"><Sparkles size={14} /> a little surprise is waiting</span>
             <h1 className="countdown-title">Counting Down to<br /><em>Your Special Day</em></h1>
-            <p className="countdown-subtitle">This little universe opens right when the clock strikes midnight on January 6, 2027.</p>
+            <p className="countdown-subtitle">This birthday surprise opens right when the clock strikes midnight on January 6, 2027.</p>
             <div className="countdown-grid" role="timer" aria-live="polite" aria-label="Time remaining until January 6, 2027">
               {units.map((unit) => (
                 <div className="countdown-unit" key={unit.label}>
@@ -261,10 +213,7 @@ export function OurLittleUniverse() {
 function UnlockedLittleUniverse() {
   const [opening, setOpening] = useState(true);
   const [envelopeOpen, setEnvelopeOpen] = useState(false);
-  const [selectedPhoto, setSelectedPhoto] = useState<{
-    group: "beginning" | "midnight" | "gallery";
-    index: number;
-  } | null>(null);
+  const [selectedPhoto, setSelectedPhoto] = useState<number | null>(null);
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
   const [lovedItems, setLovedItems] = useState<number[]>([]);
   const [openReason, setOpenReason] = useState<number | null>(null);
@@ -274,44 +223,8 @@ function UnlockedLittleUniverse() {
   const [welcomeVisible, setWelcomeVisible] = useState(false);
   const closeOpeningTimer = useRef<number | undefined>(undefined);
   const audioRef = useRef<HTMLAudioElement | null>(null);
-  const masterCardRef = useRef<HTMLButtonElement | null>(null);
-  const [masterHovered, setMasterHovered] = useState(false);
-  const midnightMasterCardRef = useRef<HTMLButtonElement | null>(null);
-  const [midnightMasterHovered, setMidnightMasterHovered] = useState(false);
-  const getCollectionForGroup = (group: "beginning" | "midnight" | "gallery") => {
-    if (group === "beginning") return beginningLightboxMemories;
-    if (group === "midnight") return midnightLightboxMemories;
-    return galleryMemories;
-  };
-  const activeCollection = selectedPhoto ? getCollectionForGroup(selectedPhoto.group) : galleryMemories;
   const selectedMemory =
-    selectedPhoto === null ? null : activeCollection[selectedPhoto.index];
-
-  const handleCardPointerMove = (
-    card: HTMLButtonElement | null,
-    event: React.PointerEvent<HTMLButtonElement>,
-  ) => {
-    if (!card) return;
-    const rect = card.getBoundingClientRect();
-    const normX = ((event.clientX - rect.left) / rect.width - 0.5) * 2;
-    const normY = ((event.clientY - rect.top) / rect.height - 0.5) * 2;
-    card.style.setProperty("--mx", `${normX.toFixed(3)}`);
-    card.style.setProperty("--my", `${normY.toFixed(3)}`);
-    card.style.setProperty("--spot-x", `${(((normX + 1) / 2) * 100).toFixed(1)}%`);
-    card.style.setProperty("--spot-y", `${(((normY + 1) / 2) * 100).toFixed(1)}%`);
-  };
-
-  const resetCardPointer = (
-    card: HTMLButtonElement | null,
-    setHovered: (value: boolean) => void,
-  ) => {
-    setHovered(false);
-    if (!card) return;
-    card.style.setProperty("--mx", "0");
-    card.style.setProperty("--my", "0");
-    card.style.setProperty("--spot-x", "50%");
-    card.style.setProperty("--spot-y", "45%");
-  };
+    selectedPhoto === null ? null : galleryMemories[selectedPhoto];
 
   useEffect(() => {
     if (opening) return;
@@ -345,18 +258,14 @@ function UnlockedLittleUniverse() {
         setHugOpen(false);
       }
       if (selectedPhoto !== null && event.key === "ArrowRight") {
-        setSelectedPhoto((current) => {
-          if (!current) return null;
-          const length = getCollectionForGroup(current.group).length;
-          return { ...current, index: (current.index + 1) % length };
-        });
+        setSelectedPhoto((current) =>
+          current === null ? null : (current + 1) % galleryMemories.length,
+        );
       }
       if (selectedPhoto !== null && event.key === "ArrowLeft") {
-        setSelectedPhoto((current) => {
-          if (!current) return null;
-          const length = getCollectionForGroup(current.group).length;
-          return { ...current, index: (current.index - 1 + length) % length };
-        });
+        setSelectedPhoto((current) =>
+          current === null ? null : (current - 1 + galleryMemories.length) % galleryMemories.length,
+        );
       }
     };
     window.addEventListener("keydown", handleKeyDown);
@@ -414,11 +323,9 @@ function UnlockedLittleUniverse() {
   };
 
   const stepPhoto = (direction: number) => {
-    setSelectedPhoto((current) => {
-      if (!current) return null;
-      const length = getCollectionForGroup(current.group).length;
-      return { ...current, index: (current.index + direction + length) % length };
-    });
+    setSelectedPhoto((current) =>
+      current === null ? null : (current + direction + galleryMemories.length) % galleryMemories.length,
+    );
   };
 
   return (
@@ -433,7 +340,7 @@ function UnlockedLittleUniverse() {
           <div className="opening-screen__stars" aria-hidden="true">
             {Array.from({ length: 18 }, (_, index) => <i key={index} className={`opening-star opening-star--${index % 6 + 1}`} />)}
           </div>
-          <span className="opening-kicker"><Sparkles size={14} /> a little universe, just for you</span>
+          <span className="opening-kicker"><Sparkles size={14} /> made with love, just for you</span>
           <p className="opening-intro">A little world, made just for you...</p>
           <div className={`birthday-envelope${envelopeOpen ? " birthday-envelope--open" : ""}`} aria-hidden="true">
             <div className="birthday-envelope__letter"><Heart size={24} fill="currentColor" /></div>
@@ -449,9 +356,9 @@ function UnlockedLittleUniverse() {
       ) : null}
 
       <header className="site-header">
-        <a className="wordmark" href="#home" aria-label="Our Little Universe home">
+        <a className="wordmark" href="#home" aria-label="For My Yuku home">
           <span className="wordmark__star"><Star size={16} fill="currentColor" /></span>
-          <span>our little <em>universe</em></span>
+          <span>for my <em>yuku</em></span>
         </a>
         <nav className={`site-nav${mobileNavOpen ? " site-nav--open" : ""}`} aria-label="Main navigation">
           {navItems.map((item) => (
@@ -475,11 +382,11 @@ function UnlockedLittleUniverse() {
 
       <section className="hero-section" id="home">
         <div className="hero-section__copy">
-          <span className="eyebrow"><span className="eyebrow__line" />A universe of us</span>
+          <span className="eyebrow"><span className="eyebrow__line" />All about you, Yuku</span>
           <h1>To My Favourite<br /><em>Person, Yuku</em> <Heart className="hero-heart" size={42} fill="currentColor" /></h1>
           <p className="hero-subtitle">Every beautiful memory of mine has a little piece of you.</p>
           <div className="hero-signature"><span />Happy Birthday, My Princess!<Heart size={14} fill="currentColor" /></div>
-          <Button variant="ghost" className="hero-link" onClick={() => scrollTo("beginning")}>
+          <Button variant="ghost" className="hero-link" onClick={() => scrollTo("heart-collage")}>
             Wander through our memories <ArrowDown size={15} />
           </Button>
         </div>
@@ -492,185 +399,15 @@ function UnlockedLittleUniverse() {
             <MemoryArtwork memory={heroMemory} label="A childhood photo of Yuku" />
           </div>
           <span className="hero-note hero-note--top">the best part<br />of every day</span>
-          <span className="hero-note hero-note--bottom">our little<br />universe</span>
+          <span className="hero-note hero-note--bottom">made just<br />for Yuku</span>
         </div>
-        <a className="scroll-cue" href="#beginning" aria-label="Scroll to the beginning"><span>keep exploring</span><ArrowDown size={15} /></a>
+        <a className="scroll-cue" href="#heart-collage" aria-label="Scroll to Yuku's heart collage"><span>keep exploring</span><ArrowDown size={15} /></a>
       </section>
 
-      <section className="beginning-section page-section" id="beginning">
-        <div className="section-topline"><span>01 / where it all started</span><span>our favorite chapter <Heart size={12} fill="currentColor" /></span></div>
-
-        <div className="beginning-header story-reveal">
-          <HuggingBearsCartoon className="beginning-cartoon beginning-cartoon--bears" />
-          <WingedLetterCartoon className="beginning-cartoon beginning-cartoon--letter" />
-          <span className="eyebrow"><span className="eyebrow__line" />Chapter zero • Just us</span>
-          <h2 className="beginning-title">
-            Let&apos;s Start at <em>the Beginning</em>
-          </h2>
-          <p className="beginning-subtitle">
-            Four little mirror snapshots, soft smiles, and the sweetest start to our little universe.
-          </p>
-          <div className="beginning-sticker-row" aria-hidden="true">
-            <span className="love-sticker love-sticker--stamp">✦ pure magic ✦ 🥰</span>
-            <span className="love-sticker love-sticker--pill"><Heart size={12} fill="currentColor" /> made for each other 🫶💞</span>
-            <span className="love-sticker love-sticker--hand">warning: too cute 🙈💘</span>
-          </div>
-        </div>
-
-        <div className="beginning-stage">
-          <KawaiiHeartCartoon className="beginning-cartoon beginning-cartoon--heart" />
-          <CupidArrowSticker className="beginning-cartoon beginning-cartoon--cupid" />
-
-          <div className="beginning-grid beginning-grid--showcase">
-            {beginningMemories.map((memory, index) => {
-              const lightboxIndex = index < 2 ? index : index + 1;
-              return (
-                <Button
-                  key={memory.id}
-                  variant="ghost"
-                  className={`beginning-card beginning-card--${index + 1} story-reveal`}
-                  onClick={() => setSelectedPhoto({ group: "beginning", index: lightboxIndex })}
-                  aria-label={`Open photo: ${memory.title}`}
-                >
-                  <span className={`washi-tape washi-tape--${memory.tapeVariant}`} aria-hidden="true" />
-                  <span className="beginning-card__sticker" aria-hidden="true">{memory.sticker}</span>
-                  <div className="beginning-card__frame">
-                    <MemoryArtwork memory={memory} label={memory.title} />
-                  </div>
-                  <span className="beginning-card__caption">{memory.title}</span>
-                  <span className="beginning-card__note">
-                    {memory.caption} <Heart size={12} fill="currentColor" />
-                  </span>
-                </Button>
-              );
-            })}
-
-            <div className={`master-photo-wrap${masterHovered ? " master-photo-wrap--active" : ""}`}>
-              <div className="master-halo" aria-hidden="true" />
-              <div className="master-emoji-ring" aria-hidden="true">
-                {masterFloatingEmojis.map((item) => (
-                  <span key={item.slot} className={`master-emoji master-emoji--${item.slot}`}>
-                    {item.emoji}
-                  </span>
-                ))}
-              </div>
-              <button
-                type="button"
-                ref={masterCardRef}
-                className="master-card"
-                onPointerEnter={() => setMasterHovered(true)}
-                onPointerMove={(event) => handleCardPointerMove(masterCardRef.current, event)}
-                onPointerLeave={() => resetCardPointer(masterCardRef.current, setMasterHovered)}
-                onClick={() => setSelectedPhoto({ group: "beginning", index: 2 })}
-                aria-label="Open Master Photo: My Whole Heart"
-              >
-                <span className="master-card__crown" aria-hidden="true">👑 Masterpiece 😍</span>
-                <div className="master-card__spotlight" aria-hidden="true" />
-                <div className="master-card__frame">
-                  <MemoryArtwork memory={masterBeginningMemory} label="Master photo of us holding hands" />
-                  <span className="master-card__corner-emoji" aria-hidden="true">💞</span>
-                </div>
-                <span className="master-card__caption">{masterBeginningMemory.title}</span>
-                <span className="master-card__note">{masterBeginningMemory.caption}</span>
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <div className="gallery-footnote story-reveal">
-          <span className="tiny-star">♡</span> Every little moment with you feels like my favorite page. 🥰🫶 <span className="tiny-star">♡</span>
-        </div>
-      </section>
-
-      <section className="beginning-section beginning-section--midnight page-section" id="midnight">
-        <div className="section-topline"><span>02 / midnight vibes</span><span>late-night magic <Heart size={12} fill="currentColor" /></span></div>
-
-        <div className="beginning-header story-reveal">
-          <MoonlightKittiesCartoon className="beginning-cartoon beginning-cartoon--bears" />
-          <PolaroidCameraCartoon className="beginning-cartoon beginning-cartoon--letter" />
-          <span className="eyebrow"><span className="eyebrow__line" />Chapter two • Black fits &amp; flashlights</span>
-          <h2 className="beginning-title">
-            Wrapped in <em>Midnight Magic</em>
-          </h2>
-          <p className="beginning-subtitle">
-            Matching black outfits, tiny finger hearts, and a love that glows even brighter after dark.
-          </p>
-          <div className="beginning-sticker-row" aria-hidden="true">
-            <span className="love-sticker love-sticker--stamp">🌙 midnight vibe 🌙</span>
-            <span className="love-sticker love-sticker--pill"><Sparkles size={12} /> flash &amp; finger heart 🫰✨</span>
-            <span className="love-sticker love-sticker--hand">black-fit duo 🖤🔥</span>
-          </div>
-        </div>
-
-        <div className="beginning-stage">
-          <LovePotionBottleCartoon className="beginning-cartoon beginning-cartoon--heart" />
-          <ShootingStarHeartCartoon className="beginning-cartoon beginning-cartoon--cupid" />
-
-          <div className="beginning-grid beginning-grid--showcase">
-            {chapterTwoMemories.map((memory, index) => {
-              const lightboxIndex = index < 2 ? index : index + 1;
-              return (
-                <Button
-                  key={memory.id}
-                  variant="ghost"
-                  className={`beginning-card beginning-card--${index + 1} beginning-card--midnight story-reveal`}
-                  onClick={() => setSelectedPhoto({ group: "midnight", index: lightboxIndex })}
-                  aria-label={`Open photo: ${memory.title}`}
-                >
-                  <span className={`washi-tape washi-tape--${memory.tapeVariant}`} aria-hidden="true" />
-                  <span className="beginning-card__sticker" aria-hidden="true">{memory.sticker}</span>
-                  <div className="beginning-card__frame">
-                    <MemoryArtwork memory={memory} label={memory.title} />
-                  </div>
-                  <span className="beginning-card__caption">{memory.title}</span>
-                  <span className="beginning-card__note">
-                    {memory.caption} <Heart size={12} fill="currentColor" />
-                  </span>
-                </Button>
-              );
-            })}
-
-            <div className={`master-photo-wrap master-photo-wrap--midnight${midnightMasterHovered ? " master-photo-wrap--active" : ""}`}>
-              <div className="master-halo master-halo--midnight" aria-hidden="true" />
-              <div className="master-emoji-ring" aria-hidden="true">
-                {midnightFloatingEmojis.map((item) => (
-                  <span key={item.slot} className={`master-emoji master-emoji--${item.slot}`}>
-                    {item.emoji}
-                  </span>
-                ))}
-              </div>
-              <button
-                type="button"
-                ref={midnightMasterCardRef}
-                className="master-card master-card--midnight"
-                onPointerEnter={() => setMidnightMasterHovered(true)}
-                onPointerMove={(event) => handleCardPointerMove(midnightMasterCardRef.current, event)}
-                onPointerLeave={() => resetCardPointer(midnightMasterCardRef.current, setMidnightMasterHovered)}
-                onClick={() => setSelectedPhoto({ group: "midnight", index: 2 })}
-                aria-label="Open Master Photo: Always My Safe Place"
-              >
-                <span className="master-card__crown master-card__crown--midnight" aria-hidden="true">💖 Forever Vibe 🫰</span>
-                <div className="master-card__spotlight" aria-hidden="true" />
-                <span className="master-card__twinkle master-card__twinkle--one" aria-hidden="true">✦</span>
-                <span className="master-card__twinkle master-card__twinkle--two" aria-hidden="true">✧</span>
-                <div className="master-card__frame">
-                  <MemoryArtwork memory={chapterTwoMasterMemory} label="Master photo of us in black outfits" />
-                  <span className="master-card__corner-emoji" aria-hidden="true">🌙</span>
-                </div>
-                <span className="master-card__caption">{chapterTwoMasterMemory.title}</span>
-                <span className="master-card__note">{chapterTwoMasterMemory.caption}</span>
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <div className="gallery-footnote story-reveal">
-          <span className="tiny-star">✦</span> Flash on, world off — just you and me forever. 🫂🖤 <span className="tiny-star">✦</span>
-        </div>
-      </section>
+      <HeartCollage />
 
       <section className="memory-section page-section" id="memories">
-        <div className="section-topline"><span>03 / little moments</span><span>collected with love <Heart size={12} fill="currentColor" /></span></div>
+        <div className="section-topline"><span>02 / little moments</span><span>collected with love <Heart size={12} fill="currentColor" /></span></div>
         <SectionHeading eyebrow="The scrapbook" title="Every Picture Holds a Little Story" note="A little gallery of moments — and all the spaces waiting for yours." />
         <div className="memory-grid">
           {galleryMemories.map((memory, index) => (
@@ -678,7 +415,7 @@ function UnlockedLittleUniverse() {
               key={memory.id}
               variant="ghost"
               className={`polaroid-card polaroid-card--${index + 1} story-reveal`}
-              onClick={() => setSelectedPhoto({ group: "gallery", index })}
+              onClick={() => setSelectedPhoto(index)}
               aria-label={`Open photo: ${memory.title}`}
             >
               <MemoryArtwork memory={memory} />
@@ -691,7 +428,7 @@ function UnlockedLittleUniverse() {
       </section>
 
       <section className="story-section page-section" id="story">
-        <div className="section-topline"><span>04 / then, now & always</span><span>our timeline <Heart size={12} fill="currentColor" /></span></div>
+        <div className="section-topline"><span>03 / then, now & always</span><span>our timeline <Heart size={12} fill="currentColor" /></span></div>
         <SectionHeading eyebrow="The chapters of us" title="Our Journey, Our Story" note="Seven little chapters, ready for the details only you two know." />
         <div className="timeline">
           <div className="timeline__line" aria-hidden="true" />
@@ -714,7 +451,7 @@ function UnlockedLittleUniverse() {
       </section>
 
       <section className="adore-section page-section" id="adore">
-        <div className="section-topline"><span>05 / the little things</span><span>my favorite list <Heart size={12} fill="currentColor" /></span></div>
+        <div className="section-topline"><span>04 / the little things</span><span>my favorite list <Heart size={12} fill="currentColor" /></span></div>
         <SectionHeading eyebrow="A list I could never finish" title="Little Things I Adore About You" note="Tap the ones that feel like a little hug." />
         <div className="adore-grid">
           {thingsToAdore.map((item, index) => {
@@ -739,7 +476,7 @@ function UnlockedLittleUniverse() {
       </section>
 
       <section className="reasons-section page-section" id="reasons">
-        <div className="section-topline"><span>06 / little love notes</span><span>open one <Heart size={12} fill="currentColor" /></span></div>
+        <div className="section-topline"><span>05 / little love notes</span><span>open one <Heart size={12} fill="currentColor" /></span></div>
         <SectionHeading eyebrow="Whenever you need a smile" title="Reasons Why You Are Special" note="A few tiny envelopes, each holding words you can make your own." />
         <div className="reason-grid">
           {specialReasons.map((reason, index) => {
@@ -814,8 +551,8 @@ function UnlockedLittleUniverse() {
       </section>
 
       <footer className="site-footer">
-        <a className="wordmark" href="#home"><span className="wordmark__star"><Star size={14} fill="currentColor" /></span><span>our little <em>universe</em></span></a>
-        <span>Every universe feels a little brighter with you in it.</span>
+        <a className="wordmark" href="#home"><span className="wordmark__star"><Star size={14} fill="currentColor" /></span><span>for my <em>yuku</em></span></a>
+        <span>Every moment feels a little brighter with you in it.</span>
         <a href="#home" aria-label="Back to the beginning">back to the beginning ↑</a>
       </footer>
 
@@ -871,7 +608,7 @@ function UnlockedLittleUniverse() {
             <h2>{selectedMemory.title}</h2>
             <p className="lightbox__caption">{selectedMemory.caption}</p>
             <p>{selectedMemory.note}</p>
-            <span className="lightbox__counter">{String((selectedPhoto?.index ?? 0) + 1).padStart(2, "0")} <span>/</span> {String(activeCollection.length).padStart(2, "0")}</span>
+            <span className="lightbox__counter">{String((selectedPhoto ?? 0) + 1).padStart(2, "0")} <span>/</span> {String(galleryMemories.length).padStart(2, "0")}</span>
           </div>
           <Button variant="ghost" size="icon" className="lightbox__next" aria-label="Next photo" onClick={(event) => { event.stopPropagation(); stepPhoto(1); }}><ArrowRight /></Button>
         </div>
@@ -883,7 +620,7 @@ function UnlockedLittleUniverse() {
           <div className="hug-heart-field" aria-hidden="true">{Array.from({ length: 22 }, (_, index) => <span key={index} className={`hug-heart hug-heart--${index % 7 + 1}`}>♡</span>)}</div>
           <div className="hug-message" onClick={(event) => event.stopPropagation()}>
             <span className="hug-message__heart"><Heart size={45} fill="currentColor" /></span>
-            <p>All the hugs in the universe,</p>
+            <p>All the warmest hugs,</p>
             <h2>just for you, Yuku.</h2>
             <span>happy birthday, my favorite person <Heart size={13} fill="currentColor" /></span>
           </div>

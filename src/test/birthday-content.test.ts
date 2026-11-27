@@ -1,9 +1,11 @@
 import { describe, expect, it } from "vitest";
 
 import {
+  centerHeartPortrait,
   galleryMemories,
   getBirthdayUnlockTimestamp,
   getCountdownParts,
+  heartCollagePhotos,
   storyTimeline,
   thingsToAdore,
 } from "@/lib/birthday-content";
@@ -11,6 +13,25 @@ import {
 describe("birthday keepsake content", () => {
   it("includes at least eight editable gallery memories", () => {
     expect(galleryMemories.length).toBeGreaterThanOrEqual(8);
+  });
+
+  it("uses 30 distinct Yuku heart collage photos including the new uploads and keeps center portrait separate", () => {
+    expect(heartCollagePhotos.length).toBe(30);
+    const uniqueSrcs = new Set(heartCollagePhotos.map((photo) => photo.src));
+    expect(uniqueSrcs.size).toBe(heartCollagePhotos.length);
+    expect(uniqueSrcs.has(centerHeartPortrait.src)).toBe(false);
+    expect(centerHeartPortrait.src).toBe(
+      "/assets/aistudio/WhatsApp_Image_2026-11-27_at_10.41.11_AM_9325cd95.jpeg",
+    );
+    expect(
+      uniqueSrcs.has("/assets/aistudio/WhatsApp_Image_2026-11-27_at_10.55.19_AM_818f3898.jpeg"),
+    ).toBe(true);
+    expect(
+      uniqueSrcs.has("/assets/aistudio/WhatsApp_Reel_2026-11-27_at_10.55.15_AM_14613ff4.jpeg"),
+    ).toBe(true);
+    for (const photo of heartCollagePhotos) {
+      expect(photo.src).toMatch(/^\/assets\/aistudio\/WhatsApp_(Image|Reel)_2026-11-27_/);
+    }
   });
 
   it("includes all seven requested story chapters", () => {

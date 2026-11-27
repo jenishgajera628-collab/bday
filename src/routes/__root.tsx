@@ -81,10 +81,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Our Little Universe" },
+      { title: "For My Yuku" },
       { name: "description", content: "A birthday surprise, made just for Yuku." },
       { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Our Little Universe" },
+      { property: "og:title", content: "For My Yuku" },
       { property: "og:description", content: "A birthday surprise, made just for Yuku." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },

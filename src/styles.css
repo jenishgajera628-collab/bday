@@ -801,7 +801,817 @@
   .music-visualizer { display: none; }
 }
 
+/* ============================================================
+   HEART-SHAPED PHOTO COLLAGE & FULLSCREEN GALLERY
+   ============================================================ */
+.heart-collage-section {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse 75% 55% at 50% 52%, color-mix(in oklab, var(--wine) 36%, transparent) 0%, transparent 72%),
+    radial-gradient(circle at 22% 28%, color-mix(in oklab, var(--rose) 12%, transparent) 0%, transparent 50%),
+    radial-gradient(circle at 78% 74%, color-mix(in oklab, var(--wine) 24%, transparent) 0%, transparent 55%),
+    var(--night);
+}
+
+.heart-collage__header {
+  position: relative;
+  z-index: 2;
+  max-width: 680px;
+  margin: 56px auto 26px;
+  text-align: center;
+}
+
+.heart-collage__header .eyebrow {
+  justify-content: center;
+}
+
+.heart-collage__title {
+  margin: 18px 0 14px;
+  color: var(--cream);
+  font-family: var(--font-display);
+  font-size: clamp(42px, 6.4vw, 72px);
+  font-weight: 400;
+  line-height: 0.98;
+  letter-spacing: -0.015em;
+}
+
+.heart-collage__title em {
+  color: var(--rose);
+  font-style: italic;
+}
+
+.heart-collage__intro {
+  max-width: 480px;
+  margin: 0 auto;
+  color: var(--ink-soft);
+  font-family: var(--font-display);
+  font-size: 19px;
+  font-style: italic;
+  line-height: 1.45;
+}
+
+.heart-stage {
+  position: relative;
+  z-index: 2;
+  width: min(860px, 100%);
+  margin: 10px auto 0;
+  padding: clamp(16px, 3vw, 34px) clamp(8px, 2vw, 24px);
+  border-radius: 30px;
+  background: radial-gradient(
+    ellipse 74% 70% at 50% 50%,
+    color-mix(in oklab, var(--wine) 30%, rgba(16, 6, 16, 0.92)) 0%,
+    rgba(10, 4, 12, 0.96) 70%,
+    rgba(8, 3, 10, 0.98) 100%
+  );
+  border: 1px solid color-mix(in oklab, var(--rose) 18%, transparent);
+  box-shadow:
+    0 24px 70px rgba(4, 1, 8, 0.72),
+    inset 0 0 60px color-mix(in oklab, var(--wine) 26%, transparent);
+  cursor: pointer;
+  transition: background 0.9s ease, box-shadow 0.9s ease;
+}
+
+.heart-stage--dark {
+  background: rgba(8, 3, 10, 0.98);
+  box-shadow: 0 24px 70px rgba(4, 1, 8, 0.85);
+}
+
+.heart-stage__glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: min(640px, 86%);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-50%, -50%) scale(0.86);
+  background: radial-gradient(
+    circle,
+    color-mix(in oklab, var(--rose) 32%, transparent) 0%,
+    color-mix(in oklab, var(--wine) 44%, transparent) 38%,
+    transparent 72%
+  );
+  filter: blur(26px);
+  opacity: 0.14;
+  transition: opacity 1s ease, transform 1s ease;
+}
+
+.heart-stage--revealing .heart-stage__glow {
+  opacity: 0.76;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.heart-stage--complete .heart-stage__glow {
+  opacity: 0.9;
+  transform: translate(-50%, -50%) scale(1.03);
+  animation: heart-glow-pulse 3.6s ease-in-out infinite;
+}
+
+.heart-stage__silhouette {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: min(640px, 84%);
+  height: auto;
+  transform: translate(-50%, -49%);
+  pointer-events: none;
+  fill: color-mix(in oklab, var(--wine) 26%, transparent);
+  stroke: color-mix(in oklab, var(--rose) 42%, transparent);
+  stroke-width: 0.7;
+  opacity: 0.18;
+  transition: opacity 0.9s ease, filter 0.9s ease;
+}
+
+.heart-stage--revealing .heart-stage__silhouette {
+  opacity: 0.72;
+  filter: drop-shadow(0 0 18px color-mix(in oklab, var(--rose) 30%, transparent));
+}
+
+.heart-stage--complete .heart-stage__silhouette {
+  opacity: 0.95;
+  stroke: color-mix(in oklab, var(--rose) 62%, transparent);
+  filter: drop-shadow(0 0 26px color-mix(in oklab, var(--rose) 45%, transparent));
+  animation: heart-silhouette-pulse 3.6s ease-in-out infinite;
+}
+
+.heart-particles {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  opacity: 0.12;
+  transition: opacity 1s ease;
+}
+
+.heart-stage--revealing .heart-particles,
+.heart-stage--complete .heart-particles {
+  opacity: 1;
+}
+
+.heart-particle {
+  position: absolute;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  animation: heart-particle-float 4.8s ease-in-out infinite;
+}
+
+.heart-particle--heart {
+  color: color-mix(in oklab, var(--rose) 80%, var(--blush));
+  font-size: clamp(13px, 1.8vw, 20px);
+  text-shadow: 0 0 14px color-mix(in oklab, var(--rose) 55%, transparent);
+}
+
+.heart-particle--spark {
+  color: var(--champagne);
+  font-size: clamp(11px, 1.4vw, 17px);
+  text-shadow: 0 0 12px color-mix(in oklab, var(--champagne) 60%, transparent);
+}
+
+.heart-particle--dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--blush);
+  box-shadow: 0 0 12px var(--rose);
+}
+
+.heart-sculpture-3d {
+  position: relative;
+  z-index: 2;
+  perspective: 1150px;
+  perspective-origin: 50% 45%;
+  transform-style: preserve-3d;
+}
+
+.heart-mosaic {
+  position: relative;
+  z-index: 2;
+  width: min(760px, 100%);
+  aspect-ratio: 0.98 / 1;
+  margin: 0 auto;
+  transform-style: preserve-3d;
+  transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  transition: transform 0.25s cubic-bezier(0.2, 0.7, 0.3, 1);
+}
+
+.heart-stage--complete .heart-mosaic {
+  animation: heart-3d-float 5.2s ease-in-out infinite;
+}
+
+.heart-tile {
+  position: absolute;
+  width: 8.4%;
+  min-width: 0;
+  min-height: 0;
+  height: auto;
+  padding: clamp(1.5px, 0.35vw, 3px) clamp(1.5px, 0.35vw, 3px) clamp(3px, 0.7vw, 6px);
+  border: 0;
+  border-radius: clamp(3px, 0.55vw, 6px);
+  background: var(--cream);
+  box-shadow:
+    0 10px 24px rgba(4, 1, 8, 0.68),
+    0 0 0 1px color-mix(in oklab, var(--rose) 24%, transparent);
+  cursor: pointer;
+  transform-origin: center center;
+  transform-style: preserve-3d;
+  will-change: transform, opacity;
+}
+
+.heart-stage--dark .heart-tile {
+  opacity: 0;
+  pointer-events: none;
+  transform: translate3d(calc(-50% + var(--start-x)), calc(-50% + var(--start-y)), -60px) scale(0.32) rotate(var(--start-rot));
+}
+
+.heart-stage--revealing .heart-tile {
+  opacity: 1;
+  transform: translate3d(-50%, -50%, var(--z, 14px)) scale(1) rotate(var(--rot));
+  transition:
+    opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1) var(--delay),
+    transform 0.74s cubic-bezier(0.2, 0.9, 0.25, 1.05) var(--delay),
+    box-shadow 0.25s ease;
+}
+
+.heart-stage--complete .heart-tile {
+  opacity: 1;
+  transform: translate3d(-50%, -50%, var(--z, 14px)) scale(1) rotate(var(--rot));
+  transition:
+    transform 0.28s cubic-bezier(0.2, 0.85, 0.3, 1),
+    box-shadow 0.28s ease,
+    filter 0.28s ease;
+}
+
+.heart-tile:hover,
+.heart-tile:focus-visible,
+.heart-tile--hovered {
+  z-index: 35;
+  outline: none;
+  transform: translate3d(-50%, -50%, 96px) scale(1.48) rotate(0deg) !important;
+  box-shadow:
+    0 22px 46px rgba(4, 1, 8, 0.86),
+    0 0 26px color-mix(in oklab, var(--rose) 66%, transparent);
+}
+
+.heart-tile__inner {
+  display: block;
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  border-radius: clamp(2px, 0.35vw, 4px);
+  background: color-mix(in oklab, var(--wine) 35%, var(--night));
+}
+
+.heart-tile__inner img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+}
+
+/* Main Special Center Portrait */
+.heart-centerpiece-wrap {
+  position: absolute;
+  top: 44.5%;
+  left: 50%;
+  z-index: 25;
+  width: 23.6%;
+  transform: translate3d(-50%, -50%, 64px);
+  transform-style: preserve-3d;
+  pointer-events: none;
+  transition: opacity 0.85s ease 0.45s, transform 0.9s cubic-bezier(0.2, 0.9, 0.25, 1.05) 0.45s;
+}
+
+.heart-stage--dark .heart-centerpiece-wrap {
+  opacity: 0;
+  transform: translate3d(-50%, -50%, -20px) scale(0.55);
+}
+
+.heart-stage--revealing .heart-centerpiece-wrap {
+  opacity: 1;
+  transform: translate3d(-50%, -50%, 64px) scale(1);
+}
+
+.heart-stage--complete .heart-centerpiece-wrap {
+  opacity: 1;
+  transform: translate3d(-50%, -50%, 64px) scale(1);
+  transition: none;
+}
+
+.heart-centerpiece-halo {
+  position: absolute;
+  inset: -26%;
+  border-radius: 50%;
+  pointer-events: none;
+  background: radial-gradient(
+    circle,
+    color-mix(in oklab, var(--rose) 52%, transparent) 0%,
+    color-mix(in oklab, var(--champagne) 28%, transparent) 38%,
+    color-mix(in oklab, var(--wine) 38%, transparent) 62%,
+    transparent 76%
+  );
+  filter: blur(18px);
+  opacity: 0.82;
+}
+
+.heart-stage--complete .heart-centerpiece-halo {
+  animation: center-halo-pulse 2.6s ease-in-out infinite;
+}
+
+.heart-center-sparkles {
+  position: absolute;
+  inset: -18%;
+  pointer-events: none;
+}
+
+.heart-center-spark {
+  position: absolute;
+  color: var(--champagne);
+  font-size: clamp(11px, 1.5vw, 18px);
+  text-shadow: 0 0 12px color-mix(in oklab, var(--rose) 70%, transparent);
+  animation: center-sparkle 3.2s ease-in-out infinite;
+}
+
+.heart-center-spark--1 { top: 4%; left: 2%; animation-delay: 0s; }
+.heart-center-spark--2 { top: 2%; right: 4%; color: var(--blush); animation-delay: 0.7s; }
+.heart-center-spark--3 { top: 48%; left: -5%; color: var(--rose); animation-delay: 1.4s; }
+.heart-center-spark--4 { top: 44%; right: -5%; animation-delay: 2.1s; }
+.heart-center-spark--5 { bottom: 3%; left: 6%; color: var(--blush); animation-delay: 1.0s; }
+.heart-center-spark--6 { bottom: 4%; right: 4%; color: var(--rose); animation-delay: 1.8s; }
+
+.heart-centerpiece {
+  position: relative;
+  display: block;
+  width: 100%;
+  min-width: 0;
+  min-height: 0;
+  height: auto;
+  padding: 0;
+  border: 0;
+  border-radius: clamp(10px, 1.6vw, 18px);
+  background: transparent;
+  cursor: pointer;
+  pointer-events: auto;
+  transform-origin: center center;
+  transition: transform 0.3s cubic-bezier(0.2, 0.85, 0.3, 1), filter 0.3s ease;
+}
+
+.heart-stage--complete .heart-centerpiece {
+  animation: center-heartbeat 2.6s ease-in-out infinite;
+}
+
+.heart-centerpiece:hover,
+.heart-centerpiece:focus-visible {
+  outline: none;
+  animation: none;
+  transform: scale(1.09) translateZ(20px);
+}
+
+.heart-centerpiece__gold-bezel {
+  display: block;
+  padding: clamp(3px, 0.55vw, 6px);
+  border-radius: clamp(10px, 1.6vw, 18px);
+  background: linear-gradient(
+    135deg,
+    #fae6b1 0%,
+    #cf9c4c 28%,
+    #fff4d0 50%,
+    #b78033 74%,
+    #f1d48a 100%
+  );
+  box-shadow:
+    0 24px 54px rgba(3, 1, 6, 0.88),
+    0 8px 24px color-mix(in oklab, var(--wine) 62%, transparent),
+    0 0 32px color-mix(in oklab, var(--rose) 48%, transparent),
+    inset 0 1px 2px rgba(255, 250, 232, 0.85);
+}
+
+.heart-centerpiece__mat {
+  display: block;
+  padding: clamp(2px, 0.35vw, 4px);
+  border-radius: clamp(8px, 1.2vw, 14px);
+  background: var(--cream);
+  box-shadow: inset 0 1px 4px rgba(45, 16, 28, 0.16);
+}
+
+.heart-centerpiece__inner {
+  display: block;
+  width: 100%;
+  aspect-ratio: 5 / 7;
+  overflow: hidden;
+  border-radius: clamp(6px, 0.9vw, 10px);
+  background: color-mix(in oklab, var(--wine) 30%, var(--night));
+}
+
+.heart-centerpiece__inner img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+}
+
+.heart-caption {
+  position: relative;
+  z-index: 2;
+  margin: 30px auto 0;
+  color: var(--blush);
+  font-family: var(--font-display);
+  font-size: clamp(24px, 3.6vw, 38px);
+  font-style: italic;
+  font-weight: 400;
+  line-height: 1.25;
+  text-align: center;
+  text-shadow: 0 2px 24px color-mix(in oklab, var(--rose) 38%, transparent);
+}
+
+.heart-actions {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin-top: 22px;
+}
+
+.heart-action-primary,
+.heart-action-secondary {
+  min-height: 44px;
+  padding: 10px 22px;
+  border-radius: 999px;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.heart-action-primary {
+  background: var(--rose);
+  color: var(--night);
+  box-shadow: 0 10px 30px color-mix(in oklab, var(--rose) 32%, transparent);
+}
+
+.heart-action-primary:hover {
+  background: var(--blush);
+  color: var(--night);
+}
+
+.heart-action-secondary {
+  border-color: color-mix(in oklab, var(--rose) 38%, transparent);
+  color: var(--blush);
+  background: color-mix(in oklab, var(--wine) 28%, transparent);
+}
+
+.heart-action-secondary:hover {
+  border-color: var(--rose);
+  background: color-mix(in oklab, var(--wine) 52%, transparent);
+  color: var(--cream);
+}
+
+/* Fullscreen Heart Gallery */
+.heart-gallery {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  background: radial-gradient(
+    ellipse at 50% 42%,
+    color-mix(in oklab, var(--wine) 40%, var(--night)) 0%,
+    rgba(9, 4, 12, 0.97) 75%
+  );
+  backdrop-filter: blur(18px);
+  animation: fade-in 0.28s ease both;
+}
+
+.heart-gallery__topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px 26px 10px;
+}
+
+.heart-gallery__brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--champagne);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.heart-gallery__counter {
+  color: var(--rose);
+  font-size: 12px;
+  letter-spacing: 0.14em;
+}
+
+.heart-gallery__counter span {
+  padding: 0 5px;
+  color: var(--ink-soft);
+}
+
+.heart-gallery__close {
+  min-width: 44px;
+  min-height: 44px;
+  color: var(--cream);
+  border-radius: 999px;
+}
+
+.heart-gallery__close:hover {
+  background: color-mix(in oklab, var(--rose) 18%, transparent);
+  color: var(--blush);
+}
+
+.heart-gallery__stage {
+  position: relative;
+  display: grid;
+  grid-template-columns: 56px minmax(0, 1fr) 56px;
+  align-items: center;
+  gap: 14px;
+  min-height: 0;
+  padding: 8px 24px;
+}
+
+.heart-gallery__nav {
+  min-width: 46px;
+  min-height: 46px;
+  border-radius: 999px;
+  color: var(--blush);
+  background: color-mix(in oklab, var(--wine) 36%, rgba(12, 5, 14, 0.72));
+  border: 1px solid color-mix(in oklab, var(--rose) 28%, transparent);
+  justify-self: center;
+}
+
+.heart-gallery__nav:hover {
+  background: var(--rose);
+  color: var(--night);
+}
+
+.heart-gallery__figure {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  min-height: 0;
+  height: 100%;
+  margin: 0;
+  animation: heart-gallery-in 0.34s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.heart-gallery__frame {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 0;
+  max-width: min(760px, 100%);
+  max-height: calc(100vh - 240px);
+  padding: 8px;
+  border-radius: 14px;
+  background: var(--cream);
+  box-shadow:
+    0 24px 68px rgba(4, 1, 8, 0.75),
+    0 0 42px color-mix(in oklab, var(--wine) 48%, transparent);
+}
+
+.heart-gallery__img {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: calc(100vh - 258px);
+  object-fit: contain;
+  border-radius: 9px;
+}
+
+.heart-gallery__meta {
+  text-align: center;
+}
+
+.heart-gallery__meta h3 {
+  margin: 0;
+  color: var(--cream);
+  font-family: var(--font-display);
+  font-size: clamp(24px, 3vw, 34px);
+  font-weight: 400;
+  line-height: 1.1;
+}
+
+.heart-gallery__meta p {
+  margin: 4px 0 0;
+  color: var(--champagne);
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-style: italic;
+}
+
+.heart-gallery__thumbs {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 10px 22px 18px;
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in oklab, var(--rose) 42%, transparent) transparent;
+}
+
+.heart-gallery__thumb {
+  flex: 0 0 auto;
+  width: 44px;
+  height: 58px;
+  padding: 2px;
+  border: 1.5px solid transparent;
+  border-radius: 7px;
+  background: color-mix(in oklab, var(--night) 80%, transparent);
+  opacity: 0.56;
+  cursor: pointer;
+  overflow: hidden;
+  transition: opacity 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
+}
+
+.heart-gallery__thumb:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
+}
+
+.heart-gallery__frame--gold {
+  padding: 9px;
+  background: linear-gradient(
+    135deg,
+    #fae6b1 0%,
+    #cf9c4c 28%,
+    #fff4d0 50%,
+    #b78033 74%,
+    #f1d48a 100%
+  );
+  box-shadow:
+    0 24px 72px rgba(4, 1, 8, 0.85),
+    0 0 54px color-mix(in oklab, var(--rose) 44%, transparent);
+}
+
+.heart-gallery__thumb--gold {
+  border-color: color-mix(in oklab, var(--champagne) 70%, transparent);
+}
+
+.heart-gallery__thumb--active {
+  opacity: 1;
+  border-color: var(--rose);
+  transform: translateY(-3px);
+  box-shadow: 0 0 16px color-mix(in oklab, var(--rose) 48%, transparent);
+}
+
+.heart-gallery__thumb img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+@keyframes heart-glow-pulse {
+  0%, 100% {
+    opacity: 0.78;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.07);
+  }
+}
+
+@keyframes heart-silhouette-pulse {
+  0%, 100% {
+    opacity: 0.88;
+    filter: drop-shadow(0 0 22px color-mix(in oklab, var(--rose) 40%, transparent));
+  }
+  50% {
+    opacity: 1;
+    filter: drop-shadow(0 0 34px color-mix(in oklab, var(--rose) 64%, transparent));
+  }
+}
+
+@keyframes heart-3d-float {
+  0%, 100% {
+    transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateY(0px) scale(1);
+  }
+  50% {
+    transform: rotateX(calc(var(--rx, 0deg) + 1.4deg)) rotateY(var(--ry, 0deg)) translateY(-6px) scale(1.012);
+  }
+}
+
+@keyframes center-heartbeat {
+  0%, 100% {
+    transform: scale(1);
+  }
+  14% {
+    transform: scale(1.045);
+  }
+  28% {
+    transform: scale(1);
+  }
+  42% {
+    transform: scale(1.028);
+  }
+  56% {
+    transform: scale(1);
+  }
+}
+
+@keyframes center-halo-pulse {
+  0%, 100% {
+    opacity: 0.72;
+    transform: scale(0.96);
+  }
+  20%, 45% {
+    opacity: 1;
+    transform: scale(1.08);
+  }
+}
+
+@keyframes center-sparkle {
+  0%, 100% {
+    opacity: 0.45;
+    transform: scale(0.85) rotate(-8deg);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.22) rotate(12deg);
+  }
+}
+
+@keyframes heart-particle-float {
+  0%, 100% {
+    transform: translateY(0) scale(0.92);
+    opacity: 0.45;
+  }
+  50% {
+    transform: translateY(-10px) scale(1.12);
+    opacity: 0.95;
+  }
+}
+
+@keyframes heart-gallery-in {
+  from {
+    opacity: 0;
+    transform: scale(0.97) translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@media (max-width: 640px) {
+  .heart-collage__header {
+    margin: 46px auto 20px;
+  }
+  .heart-stage {
+    padding: 14px 6px;
+    border-radius: 22px;
+  }
+  .heart-caption {
+    margin-top: 22px;
+    font-size: clamp(21px, 6.2vw, 28px);
+  }
+  .heart-gallery__topbar {
+    padding: 12px 14px 6px;
+  }
+  .heart-gallery__stage {
+    grid-template-columns: minmax(0, 1fr);
+    padding: 6px 14px;
+  }
+  .heart-gallery__nav {
+    position: absolute;
+    top: 50%;
+    z-index: 4;
+    transform: translateY(-50%);
+  }
+  .heart-gallery__nav--prev {
+    left: 10px;
+  }
+  .heart-gallery__nav--next {
+    right: 10px;
+  }
+  .heart-gallery__frame {
+    max-height: calc(100vh - 230px);
+    padding: 6px;
+  }
+  .heart-gallery__img {
+    max-height: calc(100vh - 244px);
+  }
+  .heart-gallery__thumbs {
+    padding: 8px 14px 14px;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
   .story-reveal { opacity: 1; transform: none; }
+  .heart-tile { transition: none !important; }
 }
